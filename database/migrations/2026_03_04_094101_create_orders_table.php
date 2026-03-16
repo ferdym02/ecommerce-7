@@ -13,10 +13,26 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+
             $table->string('order_number')->unique();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+
+            // relasi user
+            $table->foreignId('user_id')
+                ->constrained()
+                ->cascadeOnDelete();
+
+            // relasi product
+            $table->foreignId('product_id')
+                ->constrained()
+                ->cascadeOnDelete();
+
+            // jumlah produk
+            $table->integer('quantity')->default(1);
+
             $table->decimal('total_price', 12, 2)->default(0);
+
             $table->string('status')->default('pending');
+
             $table->timestamps();
         });
     }
